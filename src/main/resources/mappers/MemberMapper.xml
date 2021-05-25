@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring5_webmvc_mybatis_study.mapper.MemberMapper">
+	
+	<resultMap type="Member" id="ResMember">
+		<id property="id" column="id"/>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
+		<result property="password" column="password"/>
+		<result property="registerDateTime" column="regdate"/>
+	</resultMap>
+	
+	<sql id="selectSQL">
+		select ID,EMAIL,PASSWORD,NAME,REGDATE
+		  from member
+	</sql>
+	
+	<sql id="whereSQL">
+		<where>
+			<if test="email != null">
+					and email = #{email}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAll" resultMap="ResMember">
+		<include refid="selectSQL"/>
+	</select>
+	
+	<select id="selectByEmail" resultMap="ResMember" parameterType="String">
+		<include refid="selectSQL"></include>
+		<include refid="whereSQL"></include>
+	</select>
+	
+	<insert id = "insertMember" parameterType="Member">
+		insert 
+		  into member(email, password, name)
+		values (#{email}, #{password}, #{name});
+	</insert>
+	
+	<delete id="deleteMember" parameterType="Member">
+		delete 
+ 		  from member
+		 where email = #{email};
+	</delete>
+	
+	<update id="updateMember" parameterType="Member">
+		update member
+	 	   set name = #{name}, password = #{password}
+ 		 where email = #{email};
+	</update>
+	
+	<select id="countMember" resultType="int">
+	select count(*) from member;
+	</select>
+</mapper>
