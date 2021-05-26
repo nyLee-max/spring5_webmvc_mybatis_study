@@ -53,4 +53,16 @@
 	<select id="countMember" resultType="int">
 	select count(*) from member;
 	</select>
+	
+	<select id="selectByRegdate" parameterType="spring5_webmvc_mybatis_study.controller.ListCommand" resultMap="ResMember">
+		select ID,EMAIL,PASSWORD,NAME,REGDATE
+		  from member
+		 where regdate between #{from} and #{to}
+		 order by regdate desc;
+	</select>
+	
+	<select id="selectById" resultMap="ResMember">
+		<include refid="selectSQL"></include>
+		where id = #{id};
+	</select>
 </mapper>

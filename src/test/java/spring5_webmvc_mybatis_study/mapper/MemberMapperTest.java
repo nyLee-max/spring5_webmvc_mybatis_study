@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import spring5_webmvc_mybatis_study.config.ContextRoot;
+import spring5_webmvc_mybatis_study.controller.ListCommand;
 import spring5_webmvc_mybatis_study.dto.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -89,4 +90,28 @@ public class MemberMapperTest {
 		int res = mapper.countMember();
 	}
 
+	@Test
+	public void test07SelectByRegdate() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		
+		ListCommand listCommand = new ListCommand();
+		LocalDateTime from = LocalDateTime.of(2021, 5, 17, 00, 00);
+		LocalDateTime to = LocalDateTime.of(2021, 5, 21, 00, 00 );
+		listCommand.setFrom(from);
+		listCommand.setTo(to);
+		
+		List<Member> member = mapper.selectByRegdate(listCommand);
+		Assert.assertNotNull(member);
+		System.out.println(member);
+		
+	}
+	
+	@Test
+	public void test08SelectById() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
+		
+		Member member = mapper.selectById(10L);
+		Assert.assertNotNull(member);
+		System.out.println(member);
+	}
 }
