@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import spring5_webmvc_mybatis_study.controller.ListCommand;
 import spring5_webmvc_mybatis_study.dto.Member;
 
+@Service
 public interface ListService {
 	List<Member> selectByRegdate(ListCommand listCommand);
 }
